@@ -6,7 +6,15 @@
 
 본 튜토리얼을 통해 LangChain을 더 쉽고 효과적으로 사용하는 방법을 배울 수 있습니다.
 
+idx에서 python환경 세팅하기
+ -[idx 환경세팅](https://community.idx.dev/t/how-to-install-python-in-project-idx/54/2) 설정
 
+dotenv를 사용하기 위해서는 
+```
+pip3 install python-dotenv
+```
+
+jupyter에서 Tab키가 동작하지 않는 경우 우측 하단 상태바에 "Tab Moves Focus(Ctrl+m)"가 있는지 확인해보시라
 
 ## 📔 위키독스 전자책(무료)
 

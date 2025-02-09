@@ -1,0 +1,10 @@
+계정: dikisun@gmail.com
+API:
+Name
+fastcampus
+App ID
+U59G6R-6KWUA25GU4
+Description
+for practice to make agents using langgraph
+API
+LLM API
