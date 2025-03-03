@@ -7,14 +7,13 @@
   packages = [
     pkgs.python311Packages.pip
     pkgs.python311Packages.ipykernel
-    pkgs.python311Full
-    pkgs.chromium
-    pkgs.python311Packages.selenium
+    pkgs.python311
+    pkgs.python311Packages.streamlit
   ];
   # Sets environment variables in the workspace
-  env = {
-    PATH= ["/home/user/.local/bin" ];
-  };
+  # env = {
+  #   PATH= ["/home/user/.local/bin" ];
+  # };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
@@ -39,7 +38,27 @@
       # To run something each time the environment is rebuilt, use the `onStart` hook
     };
     # Enable previews and customize configuration
-    previews = {};
+    previews = { # The following object sets web previews
+      enable = true;
+      previews = {
+        web = {
+          command = [
+            "streamlit"
+            "run"
+            "98-Agent/part4_ch3/app.py"
+      #       "--"
+      #       "--port"
+      #       "$PORT"
+      #       "--host"
+      #       "0.0.0.0"
+            # "--disable-host-check"
+          ];
+          manager = "web";
+      #     # Optionally, specify a directory that contains your web app
+      #     # cwd = "app/client";
+        };
+      };
+    };
   };
 }
 
