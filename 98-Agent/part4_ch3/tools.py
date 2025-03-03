@@ -1,14 +1,15 @@
 import asyncio
 from typing import Dict, List, TypedDict, Annotated
-from tavily import AsyncTavilyClient
-
-async_tavily_client = AsyncTavilyClient(api_key="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")
-
-from tavily import TavilyClient
+from tavily import AsyncTavilyClient,TavilyClient
+import streamlit as st
 import os
 from langchain_core.tools import tool
+from dotenv import load_dotenv
+
+load_dotenv()
 
 tavily_client = TavilyClient()
+async_tavily_client = AsyncTavilyClient()
 
 def search_recent_news(keyword):
     """
@@ -39,7 +40,7 @@ def search_recent_news(keyword):
     title_list = [i['title'] for i in response['results']]
     return title_list
 
-async def search_news_for_subtheme(subtheme):
+async def search_news_for_subtheme(subtheme: str):
 
     async_tavily_client = AsyncTavilyClient()
     
@@ -53,7 +54,7 @@ async def search_news_for_subtheme(subtheme):
     }
 
     try:
-        with st.statu(label=f"'{subtheme}'와 관련된 뉴스 검색중...", expanded=True) as status:
+        with st.status(label=f"'{subtheme}'와 관련된 뉴스 검색중...", expanded=True) as status:
             st.markdown(f"'{subtheme}'와 관련된 뉴스를 검색하고 있습니다.")
             response = await async_tavily_client.search(**search_params)
             images = response.get('images', [])

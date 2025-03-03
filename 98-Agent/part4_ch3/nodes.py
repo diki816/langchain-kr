@@ -44,7 +44,7 @@ def subtheme_generator(state: State) -> State:
     theme_prompt = ChatPromptTemplate.from_messages(
         [
             ("system", system),
-            ("human", "Article titles: \n\n {recent_news}"),
+            ("human", "Article titles: \n\n {article_titles}"),
         ]
     )
     subtheme_chain = theme_prompt | structured_llm_newsletter
@@ -56,14 +56,14 @@ def subtheme_generator(state: State) -> State:
 async def search_sub_theme_articles(state: State) -> State:
     subthemes = state['newsletter_theme'].sub_themes
     results = await asyncio.gather(*[search_news_for_subtheme(subtheme) for subtheme in subthemes])
-    search_results = {}
+    sub_theme_articles = {}
     for result in results:
-        search_results.update(result)
+        sub_theme_articles.update(result)
 
-    if not any(sub_theme_articels.values()):
+    if not any(sub_theme_articles.values()):
         raise ValueError("No articles found for any sub-theme. Please try a different keyword.")
     
-    return {"sub_theme_articles": search_results}
+    return {"sub_theme_articles": sub_theme_articles}
     
 async def write_newsletter_section_async(state: State, sub_theme: str) -> Dict:
     articles = state['sub_theme_articles'][sub_theme]
@@ -120,6 +120,6 @@ async def edit_newsletter(state: State) -> State:
     """
     
     messages = [HumanMessage(content=prompt)]
-    response = await writer_llm.ainvoke(messages)
+    response = await newsletter_generator.ainvoke(messages)
 
     return {"messages": [HumanMessage(content=f"Edited Newsletter:\n\n{response.content}")]}

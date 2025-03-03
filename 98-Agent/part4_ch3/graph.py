@@ -1,9 +1,13 @@
+from state import State
+from langgraph.graph import StateGraph, START, END
+from nodes import search_keyword_news, subtheme_generator, search_sub_theme_articles, write_newsletter_section, aggregate_results, edit_newsletter
+
 def create_newsletter_graph():
     # logger.info("Creating newsletter graph")
     workflow = StateGraph(State)
     workflow.add_node("editor", edit_newsletter)
     workflow.add_node("search_news", search_keyword_news)
-    workflow.add_node("generate_theme", generate_newsletter_theme)
+    workflow.add_node("generate_theme", subtheme_generator)
     workflow.add_node("search_sub_themes", search_sub_theme_articles)
     workflow.add_node("aggregate", aggregate_results)
 

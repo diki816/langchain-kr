@@ -35,7 +35,7 @@ async def run_graph(inputs):
         async for output in graph.astream(inputs):
             for key, value in output.items():
                 step += 1
-                progress_bar.progress(step / len(total_steps))
+                progress_bar.progress(step / total_steps)
                 status_text.text(f"Current step: {key}")
                 
                 if key == "search_news":
