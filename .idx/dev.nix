@@ -39,7 +39,7 @@
     };
     # Enable previews and customize configuration
     previews = { # The following object sets web previews
-      enable = true;
+      enable = false;
       previews = {
         web = {
           command = [
