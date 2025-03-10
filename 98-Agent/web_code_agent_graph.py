@@ -34,11 +34,13 @@ def check_certainty(state: AgentState) -> AgentState:
         score: int = Field(description="Certainty score from 1 to 100. Higher is better.")
 
     certainty_scorer = llm.with_structured_output(CertaintyScoreResponse)
-
-    print("----CHECKING LLM'S CERTAINTY----")
-
+    
+    # Get certainty score
+    print("---CHECKING LLM'S CERTAINTY")
+    score_response = certainty_scorer.invoke(question)
+    
     return {
-        "certainty_score": certainty_scorer.invoke({"question": question}).score
+        "certainty_score": score_response.score
     }
 
 def route_based_on_certainty(state: AgentState) -> Literal["web_search", "direct_response"]:

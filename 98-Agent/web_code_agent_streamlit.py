@@ -45,26 +45,26 @@ if prompt := st.chat_input():
                         with st.status("제가 스스로 답할 수 있는지 고민 중입니다.", expanded=True) as status:
                             st.write(f"LLM의 확신 정도: {state['certainty_score']}")
                             if state['certainty_score'] == 100:
-                                status.update(label="이건 확실히 알곘네요! 제가 답변해볼게요!", status="complete", expanded=False)
+                                status.update(label="이건 확실히 알곘네요! 제가 답변해볼게요!", state="complete", expanded=False)
                             else:
-                                status.update(label="이건 제가 잘 모르는 겁니다. 웹검색을 시작합니다.", status="complete", expanded=False)
+                                status.update(label="이건 제가 잘 모르는 겁니다. 웹검색을 시작합니다.", state="complete", expanded=False)
                     if 'web_score' in state:
                         if state['web_score'] == "yes":
                             with st.status("웹에서 검색해볼게요.", expanded=True) as status:
-                                status.update(label="오! 웹 검색 결과 유용한 정보가 있었어요.", status="complete", expanded=False)
+                                status.update(label="오! 웹 검색 결과 유용한 정보가 있었어요.", state="complete", expanded=False)
                             with st.expander("웹 검색결과"):
                                 for i, results in enumerate(state['search_results'], 1):
                                     st.write(f"출처 {i}: URL: {results['url']}")
                                     # st.write(results['text'])
                         else:
                             with st.status("웹 검색으로 해결 가능한지 확인 중...", expanded=False) as status:
-                                status.update(label="이건 제가 잘 모르는 겁니다. 웹검색을 시작합니다.", status="complete", expanded=False)
+                                status.update(label="이건 제가 잘 모르는 겁니다. 웹검색을 시작합니다.", state="complete", expanded=False)
                     if 'repo_name' in state:
                         with st.expander("GitHub 검색 결과"):
                             st.write(f"참고한 GitHub 저장소: {state['repo_name']}")
                             
                     if 'generation' in state:
-                        st.session_state.messages.append(AIMessage(cntent=state['generation']))
+                        st.session_state.messages.append(AIMessage(content=state['generation']))
                         st.markdown(state['generation'])
                     
         except Exception as e:
